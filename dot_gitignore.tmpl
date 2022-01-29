@@ -1,0 +1,24 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+# MacOS files
+.DS_Store
+.DS_Store?
+{{- end }}
+
+# Ruby projects gem directory
+vendor/bundle
+
+# VSCode config directory
+.vscode/
+
+# Vim tmp files
+*.swp
+
+# Lefthook config
+lefthook.yml
+
+# Vim config
+.vim
+.nvimrc
+
+# Local docker config
+.dockerdev
