@@ -24,6 +24,7 @@ cask "1password"
 cask "telegram"
 cask "spotify"
 cask "rectangle"
+cask "clocker"
 
 cask "google-chrome"
 cask "firefox"
