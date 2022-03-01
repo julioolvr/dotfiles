@@ -25,6 +25,7 @@ cask "telegram"
 cask "spotify"
 cask "rectangle"
 cask "clocker"
+cask "obsidian"
 
 cask "google-chrome"
 cask "firefox"
