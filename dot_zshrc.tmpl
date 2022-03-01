@@ -100,25 +100,7 @@ eval "$(starship init zsh)"
 # }
 
 # fnm
-export PATH="/var/folders/s9/ym_9cffj6xldns5kc7q48vz00000gn/T/fnm_multishells/24038_1642423595011/bin":$PATH
-export FNM_MULTISHELL_PATH="/var/folders/s9/ym_9cffj6xldns5kc7q48vz00000gn/T/fnm_multishells/24038_1642423595011"
-export FNM_VERSION_FILE_STRATEGY="local"
-export FNM_DIR="/Users/joliv/Library/Application Support/fnm"
-export FNM_LOGLEVEL="info"
-export FNM_NODE_DIST_MIRROR="https://nodejs.org/dist"
-export FNM_ARCH="x64"
-autoload -U add-zsh-hook
-_fnm_autoload_hook () {
-    if [[ -f .node-version || -f .nvmrc ]]; then
-    fnm use --silent-if-unchanged
-fi
-
-}
-
-add-zsh-hook chpwd _fnm_autoload_hook \
-    && _fnm_autoload_hook
-
-rehash
+eval "$(fnm env)"
 
 #### Rust
 # Setup for Rust's Racer
