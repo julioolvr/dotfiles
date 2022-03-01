@@ -11,6 +11,7 @@ brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
 brew "tealdeer"
 brew "exa"
+brew "ripgrep"
 
 # Fonts
 cask "font-fira-mono"
