@@ -16,6 +16,7 @@ brew "exa"
 cask "font-fira-mono"
 brew "svn" # Necessary for roboto
 cask "font-roboto"
+cask "font-jetbrains-mono"
 
 # Apps
 cask "iterm2"
