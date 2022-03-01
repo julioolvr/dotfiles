@@ -22,6 +22,7 @@ cask "iterm2"
 cask "1password"
 cask "telegram"
 cask "spotify"
+cask "rectangle"
 
 cask "google-chrome"
 cask "firefox"
