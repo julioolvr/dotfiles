@@ -14,6 +14,7 @@ brew "exa"
 brew "ripgrep"
 brew "tmux" # Necessary for overmind
 brew "overmind"
+brew "starship"
 
 # Fonts
 cask "font-fira-mono"
