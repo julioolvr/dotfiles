@@ -12,6 +12,8 @@ brew "zsh-syntax-highlighting"
 brew "tealdeer"
 brew "exa"
 brew "ripgrep"
+brew "tmux" # Necessary for overmind
+brew "overmind"
 
 # Fonts
 cask "font-fira-mono"
