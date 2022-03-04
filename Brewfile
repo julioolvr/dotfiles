@@ -31,6 +31,7 @@ cask "spotify"
 cask "rectangle"
 cask "clocker"
 cask "obsidian"
+cask "todoist"
 
 cask "google-chrome"
 cask "firefox"
