@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Uncomment this line and the one at the end of the file to profile initialization
 # zmodload zsh/zprof
 
@@ -81,26 +88,13 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Disabled Pure prompt, trying out starship prompt
-# autoload -U promptinit; promptinit
-# PURE_PROMPT_SYMBOL=λ
-# prompt pure
-eval "$(starship init zsh)"
+# p10k prompt
+source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme
 
-#### Node
-# Disable nvm, trying out fnm
-# nvm configuration
-# Set a default version manually and declare a function to load nvm
-# nvm is particularly slow and if it's not used then it's a waste to load it
-# export PATH=~/.nvm/versions/node/v14.17.5/bin:$PATH
+# RTX - tooling version manager
+eval "$(rtx activate zsh)"
 
-# function invm() {
-#   export NVM_DIR="$HOME/.nvm"
-#   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-# }
-
-# fnm
-eval "$(fnm env)"
+rehash
 
 #### Rust
 # Setup for Rust's Racer
@@ -125,9 +119,6 @@ export PATH="$PATH:$HOME/.local/bin"
 
 # Because of macOS reasons
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 # Set VSCode as the default editor for gems
 export BUNDLER_EDITOR=code
@@ -204,3 +195,6 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 
 # Uncomment this line and the one at the top of the file to profile initialization
 # zprof
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
