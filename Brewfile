@@ -7,7 +7,7 @@ brew "ack"
 brew "zsh"
 brew "zsh-completions"
 brew "tealdeer"
-brew "exa"
+brew "eza"
 brew "ripgrep"
 brew "tmux" # Necessary for overmind
 brew "overmind"
@@ -19,7 +19,7 @@ brew "jq"
 brew "romkatv/powerlevel10k/powerlevel10k"
 
 # Fonts
-cask "font-fira-code"
+# cask "font-monaspace" # Not installed because it's not the nerdfonts version
 
 # Apps
 cask "iterm2"
