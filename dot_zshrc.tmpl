@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Uncomment this line and the one at the end of the file to profile initialization
 # zmodload zsh/zprof
 
@@ -10,7 +17,7 @@ export ZSH={{- .chezmoi.homeDir }}/.oh-my-zsh
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="hyperzsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -54,7 +61,7 @@ export ZSH={{- .chezmoi.homeDir }}/.oh-my-zsh
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting history-substring-search docker)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting history-substring-search docker fzf-tab)
 
 # Disable "magic" functions that slow down copy/paste
 DISABLE_MAGIC_FUNCTIONS=true
@@ -81,17 +88,15 @@ source $ZSH/oh-my-zsh.sh
 # ssh
 # export SSH_KEY_PATH="~/.ssh/rsa_id"
 
-# Mise - tooling version manager
-eval "$(mise activate zsh)"
-
 rehash
+
+# Mise - tooling version manager
+# Using shims to avoid a performance hit on every prompt render (200ms+)
+eval "$(mise activate zsh --shims)"
 
 #### Rust
 # Setup for Rust's Racer
 RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-
-# Z
-. ~/bin/z.sh
 
 export TERM=xterm-256color
 
@@ -110,8 +115,8 @@ export PATH="$PATH:$HOME/.local/bin"
 # Because of macOS reasons
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
-# Set VSCode as the default editor for gems
-export BUNDLER_EDITOR=code
+# Set {{ .editor }} as the default editor for gems
+export BUNDLER_EDITOR={{ .editor }}
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -130,14 +135,23 @@ alias oc="overmind connect"
 alias or="overmind restart"
 alias be="bundle exec"
 alias nr="npm run"
-## Replace ls with exa and add some convenient shortcuts
-alias e="exa --group-directories-first"
-alias el="exa -l --group-directories-first"
+alias ntw="npm test -- --watch"
+alias joke="xh -j -b https://icanhazdadjoke.com/ | jq '.joke'"
+alias prp="poetry run"
+alias ws="windsurf"
+## Default code editor
+alias c="{{ .editor }}"
+## Replace ls with eza and add some convenient shortcuts
+export EZA_ICONS_AUTO=true
+alias e="eza --group-directories-first"
+alias el="eza -l --group-directories-first"
 alias ls=e
 alias ll=el
 
-# Use nvim as default editor
+# Use nvim as default non-visual editor
 export EDITOR=nvim
+# Use {{ .editor }} as the default visual editor
+export VISUAL={{ .editor }}
 
 # If it exists, source a private zshrc file that's not in source control
 if [ -f ~/.zshrc.private ]; then
@@ -148,7 +162,7 @@ fi
 fzf-git-branch() {
   git rev-parse HEAD > /dev/null 2>&1 || return
 
-  git branch --color=always --all --sort=-committerdate |
+  git branch --color=always --sort=-committerdate |
     grep -v HEAD |
     fzf --height 50% --ansi --no-multi --preview-window right:65% \
         --preview 'git log -n 50 --color=always --date=short --pretty="format:%C(auto)%cd %h%d %s" $(sed "s/.* //" <<< {})' |
@@ -179,11 +193,33 @@ fzf-git-checkout() {
 alias gb='fzf-git-branch'
 alias gco='fzf-git-checkout'
 
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
 eval "$(zoxide init zsh)"
 
-eval "$(starship init zsh)"
+# Load fzf-git
+source ~/.dot/fzf-git.sh
+
+autoload -U compinit; compinit
+
+# fzf-tab config
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# custom fzf flags
+# NOTE: fzf-tab does not follow FZF_DEFAULT_OPTS by default
+# zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Uncomment this line and the one at the top of the file to profile initialization
 # zprof

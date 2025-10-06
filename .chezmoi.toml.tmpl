@@ -1,0 +1,4 @@
+{{ $editor := promptStringOnce . "editor" "Editor" }}
+
+[data]
+    editor = {{ $editor | quote }}
