@@ -1,6 +1,3 @@
-tap "homebrew/cask-versions"
-tap "homebrew/cask-fonts"
-
 # CLI tools
 brew "git"
 brew "neovim"
@@ -19,7 +16,7 @@ brew "fzf"
 brew "htop"
 brew "xh"
 brew "jq"
-brew "romkatv/powerlevel10k/powerlevel10k"
+brew "powerlevel10k"
 
 # Fonts
 # cask "font-monaspace" # Not installed because it's not the nerdfonts version
