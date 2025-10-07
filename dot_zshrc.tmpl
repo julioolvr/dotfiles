@@ -61,7 +61,7 @@ source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting history-substring-search docker fzf-tab)
+plugins=(git history-substring-search docker fzf-tab)
 
 # Disable "magic" functions that slow down copy/paste
 DISABLE_MAGIC_FUNCTIONS=true
@@ -192,7 +192,7 @@ alias gco='fzf-git-checkout'
 eval "$(zoxide init zsh)"
 
 # Load fzf-git
-source ~/.dot/fzf-git.sh
+source ~/.tools/fzf-git.sh
 
 autoload -U compinit; compinit
 
@@ -216,6 +216,9 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Uncomment this line and the one at the top of the file to profile initialization
 # zprof
